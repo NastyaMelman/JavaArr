@@ -124,3 +124,6 @@ package com.company;
         void add(T item) throws FunnyException;
         boolean contains(T s);
     }
+    
+git init
+
