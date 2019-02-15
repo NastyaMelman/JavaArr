@@ -1,0 +1,126 @@
+//StartListTestWrapper
+package com.company;
+
+public class StartListTestWrapper {
+
+    public static void main(String[] args) {
+        TesterCollection w = new TesterCollection();
+        try {
+            w.testerCollection(args);
+        } catch (FunnyException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+//ArrayList
+package com.company;
+
+public class ArrayList<T> implements ICollection<T> {
+    private T[] array;
+    private int size;
+
+    public ArrayList() {
+        array = (T[]) new Object[10];
+    }
+    public ArrayList(int length) {
+        array = (T[]) new Object[length];
+    }
+
+    public void add(T item) throws FunnyException {
+        if (item == null) {
+            return;
+        }
+        if (size >= array.length) {
+            resize();
+        }
+        array[size] = (T)item;
+        size++;
+    }
+
+    public void resize(){
+        T[] temp = (T[]) new Object[array.length * 3/2 + 1];
+        for (int i = 0; i < array.length; i++) {
+            temp[i] = array[i];
+        }
+        array = temp;
+    }
+    @Override
+    public boolean contains(Object s) {
+        if (s == null) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (s.equals(array[i])) {
+                return true;
+            }
+        }
+            return false;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public T get(int n) {
+        if (n > size) {
+            return null;
+        } else {
+            return array[n];
+        }
+    }
+}
+
+//TesterCollection
+package com.company;
+
+public class TesterCollection {
+
+    public void testerCollection(String[] args) throws FunnyException {
+        ArrayList<String> newBag = new ArrayList(10);
+        newBag.add("phone");
+        newBag.add("pen");
+        newBag.add("pen");
+        newBag.add("pen");
+        newBag.add("pen");
+        newBag.add("pen");
+        newBag.add("pen");
+        newBag.add("pen");
+        newBag.add("food");
+        newBag.add("notebook");
+        newBag.add("money");
+        newBag.add("book");
+        newBag.add("pomade");
+        newBag.add("card");
+        newBag.add("charger");
+        newBag.add("water");
+
+        if (newBag.contains("pen")) {
+            System.out.println("There is pen in your bag");
+        }
+        else {
+            System.out.println("There is no pen in your bag");
+        }
+
+        if (newBag.contains("coffee")) {
+            System.out.println("There is coffee in your bag");
+        }
+        else {
+            System.out.println("There is no coffee in your bag");
+        }
+
+        String s = newBag.get(5);
+        System.out.println("Item №5 is " + s);
+
+    }
+
+}
+
+//ICollection
+package com.company;
+    
+    public interface ICollection<T> {
+        int size();
+        void add(T item) throws FunnyException;
+        boolean contains(T s);
+    }
